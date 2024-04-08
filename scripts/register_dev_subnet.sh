@@ -5,7 +5,6 @@ set -e -u
 . ./scripts/env_var_dev.sh
 
 # expect requires exports
-
 export INTERPRETER=$(which python)
 export OWNER_WALLET=local-dev-wallet-owner-0
 export OWNER_HOTKEY=local-dev-hotkey-owner-0
@@ -85,7 +84,6 @@ mint_subnet_registration_tokens() {
 
 
 create_subnet() {
-
 OUTPUT=$(/usr/bin/expect << 'EOF4'
     spawn /bin/bash -c "btcli subnet create --wallet.name $env(OWNER_WALLET) \
         --wallet.hotkey $env(OWNER_HOTKEY) --wallet.coldkey $env(OWNER_COLDKEY) \
@@ -130,72 +128,3 @@ mint_subnet_registration_tokens
 create_subnet
 register_wallet_on_subnet $VALIDATOR_WALLET $VALIDATOR_HOTKEY $VALIDATOR_COLDKEY
 register_wallet_on_subnet $MINER_WALLET $MINER_HOTKEY $MINER_COLDKEY
-
-
-
-# registration_allowed
-
-
-# btcli subnet lock_cost --subtensor.network $SUBTENSOR_NETWORK
-# Bittensor Version: Current 6.8.2/Latest 6.9.3
-# Please update to the latest version at your earliest convenience. Run the following command to upgrade:
-
-# python -m pip install --upgrade bittensor
-# Subnet lock cost: τ1,000.000000000
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# btcli wallet faucet mint --wallet.name $WALLET --subtensor.network local
-
-
-# /usr/bin/expect << 'EOF1'
-#     set timeout -1
-#     spawn /bin/bash -c "btcli wallet new_coldkey --wallet.name $env(WALLET) --wallet.coldkey $env(COLDKEY)"
-#     expect -re {Specify password for key encryption.*$}
-#     send "Bittensor123!\r" 
-#     expect -re {Retype your password.*$}
-#     send "Bittensor123!\r"
-#     expect eof    
-# EOF1
-
-
-
-# echo "waiting for the node to start"
-# sleep 5
-# echo "creating wallet"
-# create_wallet
-# echo "minting tokens"
-# mint_tokens
-# echo "registering subnet"
-# register_subnet
-
-
-
-
-
-# btcli subnet register --netuid $NETUID --subtensor.network local
-# btcli subnet register --wallet.name $WALLET --wallet.hotkey $HOTKEY --wallet.coldkey $COLDKEY --netuid $NETUID --subtensor.network local
-
-
-# python ./neurons/miner.py --name $MINOR_NAME \
-#     --interpreter $INTERPRETER \
-#     -- --netuid $NETUID \
-#     --subtensor.network $SUBTENSOR_NETWORK \  
-#     --wallet.name $WALLET \
-#     --wallet.hotkey $HOTKEY \
-#     --wallet.coldkey $COLDKEY \
-#     --axon.port $AXON_PORT \ 
-#     --logging.debug \
-#     --miner.blacklist.force_validator_permit \
-#     --auto_update
